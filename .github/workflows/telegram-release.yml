@@ -1,0 +1,33 @@
+name: Publish release to Telegram
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: telegram-release-${{ github.event.release.id }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Send APK and web link
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: '-1004378561792'
+          TELEGRAM_BOT_USERNAME: davaivorbitu_ai
+          ORBITA_WEB_URL: ${{ vars.ORBITA_WEB_URL || 'https://orbita-sssanctum.website.yandexcloud.net/' }}
+        run: node scripts/publish-telegram.mjs
