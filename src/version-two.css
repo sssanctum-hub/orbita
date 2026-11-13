@@ -1,0 +1,394 @@
+.week-sphere-bubble.is-done .week-sphere-face {
+  background: #bfc7ca;
+  color: #5c656a;
+}
+.week-sphere-bubble.is-done .stack-sheet {
+  background: #a3adb2;
+}
+.day-event[data-day-drag="true"] {
+  touch-action: pan-y;
+}
+.day-event.is-dragging {
+  outline: 2px solid #235be8;
+  box-shadow: 0 8px 20px #20354a25;
+  z-index: 4;
+}
+.day-placed:has(.is-dragging) {
+  z-index: 4;
+}
+.calendar-day-list .planner-task {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: center;
+  text-align: left;
+}
+.calendar-task-sphere {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  corner-shape: round;
+}
+.calendar-day-list .planner-task strong,
+.calendar-day-list .planner-task small {
+  grid-column: 2;
+  min-width: 0;
+}
+.backlog-menu h2 .dot-text + .dot-text {
+  margin-top: 8px;
+}
+.year-gantt-view {
+  display: flex;
+  flex: 1 1 0 !important;
+  flex-direction: column;
+  min-height: 0;
+}
+.year-gantt-view > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.year-gantt-view h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+}
+.year-gantt-view > header p {
+  margin: 0;
+  font-size: 12px;
+  color: #637b85;
+}
+.year-gantt {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+}
+.year-pixels {
+  display: grid;
+  grid-template-columns: 20px repeat(12, minmax(0, 1fr));
+  grid-template-rows: 20px repeat(31, minmax(0, 1fr));
+  gap: 2px 4px;
+  min-height: 0;
+  height: 100%;
+  padding: 2px 3px 10px;
+  box-sizing: border-box;
+}
+.year-pixel-row {
+  display: contents;
+}
+.year-month-label {
+  font-size: 9px;
+  color: #637b85;
+  text-align: center;
+  text-transform: uppercase;
+  align-self: center;
+}
+.year-day-label {
+  font-size: 9px;
+  color: #637b85;
+  align-self: center;
+}
+.year-dot {
+  border: 0;
+  padding: 0;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: none;
+  position: relative;
+}
+.year-dot::before {
+  content: "";
+  display: block;
+  width: auto;
+  height: min(10px, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  corner-shape: round;
+  background: #bad2d9;
+}
+.year-dot.load-low::before {
+  background: #70cfa4;
+}
+.year-dot.load-medium::before {
+  background: #efb36d;
+}
+.year-dot.load-high::before {
+  background: #ee9390;
+}
+.year-dot.is-done::before {
+  background: #9ca9ae;
+}
+.year-dot.is-today::before {
+  outline: 1.5px solid #152d36;
+  outline-offset: 2px;
+}
+.year-dot > span {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.year-gesture-hint {
+  font-size: 10px;
+  text-align: center;
+  color: #637b85;
+  margin: 12px 0 0;
+}
+.year-month-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 10px 6px 16px;
+  animation: year-detail-in 0.18s ease-out;
+}
+.year-month-panels section {
+  scroll-margin-top: 10px;
+}
+.year-month-panels h3 {
+  font-size: 20px;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+.year-month-panels h3 small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: #637b85;
+  margin-top: 5px;
+  text-transform: none;
+}
+.year-month-panels section > div {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: 10px 4px;
+}
+.year-month-panels .year-dot {
+  height: 24px;
+}
+.year-month-panels .year-dot::before {
+  width: 12px;
+  height: 12px;
+}
+.calendar-day-list .planner-task.done {background:#e0e5e6;}
+.calendar-day-list .planner-task.done .calendar-task-sphere {background:#bcc6ca!important;color:#58666c;}
+.year-month-panels .year-dot > span {
+  clip-path: none;
+  width: auto;
+  height: auto;
+  font-size: 7px;
+  color: #16383a;
+}
+.today-home .showing-gantt .planner-surface {
+  padding-right: 32px;
+  overflow: hidden;
+}
+@keyframes year-detail-in {
+  from {
+    opacity: 0.45;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.time-picker-dialog {
+  width: min(440px, calc(100vw - 24px));
+  padding: 24px 18px 18px;
+  background: #f1f3ef;
+  color: #101918;
+}
+.time-picker-dialog h3 {
+  font-size: 18px;
+}
+.time-picker-dialog header p {
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+.time-wheels {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  align-items: center;
+}
+.time-wheel-colon {
+  display: none;
+}
+.time-wheel-scroll {
+  height: 384px;
+  padding-block: 160px;
+  border-radius: 50% / 36%;
+  corner-shape: round;
+  background: #e1e7e4;
+}
+.time-wheel-column:first-child .time-wheel-scroll {
+  border-radius: 0 65% 65% 0 / 0 40% 40% 0;
+}
+.time-wheel-column:last-child .time-wheel-scroll {
+  border-radius: 65% 0 0 65% / 40% 0 0 40%;
+  background: #e9ede9;
+}
+.time-wheel-number {
+  font-weight: 400;
+  color: #525e5b;
+  font-variant-numeric: tabular-nums;
+}
+.time-wheel-number.selected {
+  color: #0a0b0d;
+}
+.time-wheel-caption {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+.time-picker-dialog .time-picker-confirm,
+.time-picker-dialog .time-picker-cancel {
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  corner-shape: round;
+  display: grid;
+  place-items: center;
+}
+.time-picker-dialog .time-picker-confirm {
+  background: #0a0b0d;
+  color: #fff;
+}
+.time-picker-dialog .time-picker-cancel {
+  background: transparent;
+  color: #0a0b0d;
+}
+.time-picker-dialog .time-picker-clear {
+  font-size: 12px;
+}
+.orbit-app.view-moving {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.view-moving > .today-host,
+.view-moving > .orbit-host {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+.view-to-orbit.view-moving > .today-host {
+  animation: calendar-away 0.24s ease-in both;
+}
+.view-to-orbit.view-moving > .orbit-host {
+  animation: orbit-arrive 0.24s ease-out both;
+}
+.view-to-calendar.view-moving > .orbit-host {
+  animation: orbit-away 0.24s ease-in both;
+}
+.view-to-calendar.view-moving > .today-host {
+  animation: calendar-arrive 0.24s ease-out both;
+}
+@keyframes calendar-away {
+  to {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+@keyframes orbit-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes orbit-away {
+  to {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+@keyframes calendar-arrive {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-height: 700px) {
+  .time-wheel-scroll {
+    height: 256px;
+    padding-block: 96px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .year-month-panels {
+    animation: none;
+  }
+}
+
+/* Continuous opposing time wheels, matching the supplied motion reference. */
+.time-wheels { isolation: isolate; overflow: hidden; border-radius: 28px; }
+.time-wheel-column { position: relative; overflow: hidden; }
+.time-wheel-scroll,
+.time-wheel-column:first-child .time-wheel-scroll,
+.time-wheel-column:last-child .time-wheel-scroll {
+  border-radius: 0;
+  background: transparent;
+  scroll-snap-type: y mandatory;
+  scroll-padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+.time-wheel-column::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  bottom: 0;
+  width: 200%;
+  border-radius: 50%;
+  corner-shape: round;
+  background: #e1e7e4;
+  pointer-events: none;
+  z-index: -1;
+}
+.time-wheel-column:first-child::before { right: 0; }
+.time-wheel-column:last-child::before { left: 0; background: #e9ede9; }
+.time-wheel-number {
+  font-size: clamp(48px, 15vw, 64px);
+  color: #101918;
+  font-weight: 400;
+  transform-origin: center;
+  transition: none;
+  backface-visibility: hidden;
+}
+.time-picker-dialog[open] { animation: time-wheel-enter .32s cubic-bezier(.16,1,.3,1) both; }
+@keyframes time-wheel-enter {
+  from { opacity: 0; transform: translateY(22px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .time-picker-dialog[open] { animation: none; }
+}
+
+.time-wheel-scroll {
+  mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 84%, transparent);
+}

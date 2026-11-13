@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const pkgPath=path.join(root,'package.json'),pkg=JSON.parse(await fs.readFile(pkgPath,'utf8'));
+const version=process.argv[2] || pkg.version.replace(/(\d+)$/,n=>String(Number(n)+1));
+if(!/^\d+\.\d+\.\d+$/.test(version))throw Error('Use a version such as 1.0.1');
+const old=pkg.version;pkg.version=version;
+const confPath=path.join(root,'src-tauri/tauri.conf.json'),conf=JSON.parse(await fs.readFile(confPath,'utf8'));
+conf.version=version;conf.bundle.android.versionCode++;
+const lockPath=path.join(root,'package-lock.json'),lock=JSON.parse(await fs.readFile(lockPath,'utf8'));lock.version=version;lock.packages[''].version=version;
+for(const [file,value] of [[pkgPath,pkg],[confPath,conf],[lockPath,lock]])await fs.writeFile(file,JSON.stringify(value,null,2)+'\n');
+const cargo=path.join(root,'src-tauri/Cargo.toml');await fs.writeFile(cargo,(await fs.readFile(cargo,'utf8')).replace('version = "'+old+'"','version = "'+version+'"'));
+const cargoLock=path.join(root,'src-tauri/Cargo.lock');await fs.writeFile(cargoLock,(await fs.readFile(cargoLock,'utf8')).replace('name = "personal_assistant"\nversion = "'+old+'"','name = "personal_assistant"\nversion = "'+version+'"'));
+console.log('Version: '+version+'; Android code: '+conf.bundle.android.versionCode);

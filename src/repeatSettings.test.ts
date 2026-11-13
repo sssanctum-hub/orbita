@@ -1,0 +1,12 @@
+import {expect,it} from 'vitest';
+import {newTask,asFact} from './domain';
+import {normalizeRepeatSettings} from './repeatSettings';
+import {occurrencesBetween} from './series';
+import {prepareTaskDraft} from './taskDraft';
+const base={...newTask(),title:'Повтор',due:'2026-10-29',repeat:'daily' as const,repeatCount:3,repeatInterval:2};
+it('counts daily occurrences including the first and stops calendar expansion',()=>{const t=normalizeRepeatSettings(base);expect(t.repeatUntil).toBe('2026-11-02');expect(occurrencesBetween([t],'2026-10-01','2026-12-01').map(t=>t.due)).toEqual(['2026-10-29','2026-10-31','2026-11-02']);});
+it('counts selected weekdays rather than weeks, skipping dates before first occurrence',()=>{const t=normalizeRepeatSettings({...base,repeat:'weekly',repeatInterval:2,repeatWeekdays:[0,4],repeatCount:4});expect(t.repeatUntil).toBe('2026-11-23');expect(occurrencesBetween([t],'2026-10-01','2026-12-31').map(t=>t.due)).toEqual(['2026-10-30','2026-11-09','2026-11-13','2026-11-23']);});
+it('keeps month-end anchoring across short months',()=>{const t=normalizeRepeatSettings({...base,due:'2027-01-31',repeat:'monthly',repeatInterval:1,repeatCount:3});expect(t.repeatUntil).toBe('2027-03-31');});
+it('one occurrence ends at the first selected weekday',()=>{expect(normalizeRepeatSettings({...base,repeat:'weekly',repeatWeekdays:[4],repeatCount:1}).repeatUntil).toBe('2026-10-30');});
+it('recalculates the end on save when the first date changes',()=>{const old=normalizeRepeatSettings(base);expect(prepareTaskDraft({...old,due:'2026-11-01'},'').repeatUntil).toBe('2026-11-05');});
+it('validates count and removes it for facts and non-repeating records',()=>{for(const n of [0,1000,1.5])expect(()=>normalizeRepeatSettings({...base,repeatCount:n})).toThrow();expect(asFact(base).repeatCount).toBeUndefined();expect(normalizeRepeatSettings({...base,repeat:''}).repeatCount).toBeUndefined();});

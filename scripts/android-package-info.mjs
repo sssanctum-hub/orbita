@@ -1,0 +1,1 @@
+const xml=await fetch('https://dl.google.com/android/repository/repository2-3.xml').then(r=>r.text());console.log([...xml.matchAll(/<remotePackage\b[^>]*path="([^"]+)"[^>]*>/g)].map(m=>m[1]).filter(p=>p.startsWith('platforms;android-37')).join('\n'));

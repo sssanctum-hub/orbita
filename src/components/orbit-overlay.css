@@ -1,0 +1,81 @@
+html.orbit-overlay-window,
+.orbit-overlay-window body,
+.orbit-overlay-window #root { background: transparent; margin: 0; height: 100%; overflow: hidden; }
+
+.orbit-overlay {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  outline: none;
+  --arc-radius: min(46vw, 300px);
+  --arc-top: 24px;
+}
+.orbit-overlay-arc {
+  position: absolute;
+  inset: 0;
+  clip-path: circle(var(--arc-radius) at 50% calc(var(--arc-top) + var(--arc-radius)));
+  background:
+    repeating-radial-gradient(circle at 50% calc(var(--arc-top) + var(--arc-radius)), transparent 0 42px, #5a698429 42px 43px),
+    radial-gradient(ellipse at 50% 65%, #c5d8f7f2, #f3f7fbe0 75%);
+  pointer-events: none;
+}
+.orbit-overlay-sphere {
+  position: absolute;
+  left: calc(50% + var(--arc-radius) * var(--arc-x));
+  top: calc(var(--arc-top) + var(--arc-radius) * (1 - var(--arc-y)));
+  translate: -50% -50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  corner-shape: round;
+  color: #263650;
+  background: #f7fbfff0;
+  border: 1px solid #a6bad5;
+}
+.orbit-overlay-sphere { transition: background-color 120ms, color 120ms, box-shadow 120ms; }
+.orbit-overlay-sphere[aria-pressed=true] { box-shadow: 0 0 0 3px #2452ec35; }
+.orbit-overlay-sphere[data-preview=true] {
+  z-index: 1;
+  color: #181b17;
+  background: #bdff79;
+  border-color: #293222;
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-overlay-sphere { transition: none; }
+}
+.orbit-overlay-info {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  translate: -50% 0;
+  width: min(54%, 310px);
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 6px 12px 8px;
+  border-radius: 22px;
+  background: #16191ef5;
+  color: #f8fafc;
+  text-align: center;
+}
+.orbit-overlay-info strong { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 20px; }
+.orbit-overlay-info span { font-size: 12px; }
+.orbit-overlay-count { color: #cbd3df; }
+.orbit-overlay-next { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #bdff79; }
+.orbit-overlay-actions { display: flex; gap: 5px; margin-top: 4px; }
+.orbit-overlay-actions button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 4px 10px;
+  color: #1d2e48;
+  background: #f6f7f8;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.orbit-overlay-actions .orbit-overlay-close { padding-inline: 6px; }
+.orbit-overlay button:focus-visible { outline: 2px solid #2452ec; outline-offset: 2px; }

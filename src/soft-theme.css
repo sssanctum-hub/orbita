@@ -1,0 +1,397 @@
+/* Orbita 1.0.2: quiet, static gradients. No large blur layers or animations. */
+:root {
+  --mist-ink: #303944;
+  --mist-muted: #626d7b;
+  --mist-line: #e3e7f0;
+  --mist-cool: #e4eff8;
+  --mist-warm: #f9e4d9;
+  --mist-mint: #ddf1e4;
+  --mist-lilac: #eee3f6;
+}
+.orbit-app {
+  background: #fff;
+}
+.orbit-app .mobile-orbit-home {
+  --sphere-ink: var(--mist-ink);
+  background: #fff;
+}
+.sphere-curve path {
+  stroke: #cbd2de;
+}
+.sphere-marker {
+  background: #e4eff8;
+  box-shadow: 0 3px 10px #59657816;
+}
+.sphere-icon {
+  background: var(--sphere-color);
+  border-color: #ffffffbd;
+  color: color-mix(in srgb, var(--sphere-color) 76%, #354052);
+  box-shadow:
+    inset 0 1px 2px #fff,
+    0 5px 18px #6981a20a;
+}
+.sphere-item.selected .sphere-icon {
+  background: var(--sphere-color);
+  border-color: color-mix(in srgb, var(--sphere-color) 38%, #fff);
+  color: color-mix(in srgb, var(--sphere-color) 70%, #2e3448);
+  box-shadow:
+    0 0 30px color-mix(in srgb, var(--sphere-color) 16%, transparent),
+    inset 0 1px 3px #fff;
+}
+.sphere-item.selected .sphere-title {
+  background: #ffffffb8;
+  border-color: #e4e7ef;
+  color: #303944;
+  box-shadow: 0 3px 14px #7b8aa20a;
+}
+.sphere-title {
+  color: #5d6876;
+}
+.orbit-core,
+.orbit-add-area,
+.sphere-controls button,
+.sphere-remove-area {
+  background: var(--mist-cool);
+  color: #576580;
+  border: 1px solid #ffffffdf;
+  box-shadow: 0 4px 18px #8998b51a;
+}
+.orbit-core {
+  background: #e4eff8;
+  box-shadow:
+    0 0 0 5px #e7e9f480,
+    0 0 24px #c0bbe857;
+}
+.orbit-add-area {
+  background: var(--mist-mint);
+}
+.orbit-core:hover,
+.orbit-add-area:hover,
+.sphere-controls button:hover {
+  background: var(--mist-lilac);
+  color: #3d4c68;
+}
+.sphere-reminder-dot {
+  box-shadow: 0 1px 5px #73518730;
+}
+/* White space and pale atmosphere around dialogs; content never uses gradient text. */
+dialog.task-editor,
+dialog.area-editor,
+dialog.sphere-preview,
+.app-select-dialog,
+.time-picker-dialog {
+  color: var(--mist-ink);
+  border-color: #ffffffde;
+  background: #e4eff8;
+  box-shadow: 0 20px 70px #64718a23;
+}
+dialog.task-editor::backdrop,
+dialog.area-editor::backdrop,
+.sphere-preview::backdrop,
+.calendar-sheet::backdrop,
+.app-select-dialog::backdrop,
+.time-picker-dialog::backdrop {
+  background: #707b9440;
+  backdrop-filter: blur(7px);
+}
+.task-editor-header {
+  background: #fff;
+}
+.task-editor-header h2,
+.area-editor h2 {
+  color: #384456;
+}
+.task-editor-emblem {
+  background: #f4c866;
+  box-shadow: inset 0 0 0 1px #ffffffbf;
+}
+.task-date-card {
+  background: var(--mist-mint);
+  color: #3f635a;
+  border-color: #dcece6;
+}
+.task-reminder-card {
+  background: var(--mist-lilac);
+  color: #595878;
+  border-color: #e4dff1;
+}
+.task-choice-card {
+  box-shadow:
+    inset 0 1px 1px #fff,
+    0 4px 16px #7b8aaa09;
+}
+.task-choice-card[aria-expanded="true"] {
+  outline: 1px solid #95a6c0;
+  outline-offset: 2px;
+}
+.task-inline-panel,
+.task-editor .task-note-field,
+.task-step,
+.task-new-step {
+  background: #edf4f6;
+}
+.task-editor input,
+.task-editor textarea,
+.task-editor .app-select-trigger,
+.date-picker-trigger,
+.time-picker-trigger,
+.area-editor input {
+  background: #ffffffbf;
+  border-color: var(--mist-line);
+  color: var(--mist-ink);
+}
+.task-editor label,
+.date-picker-label,
+.task-field-hint,
+.task-reminder-caption,
+.miniature-picker legend,
+.time-picker-dialog header p,
+.time-wheel-caption {
+  color: var(--mist-muted);
+}
+.task-editor input::placeholder,
+.task-editor textarea::placeholder {
+  color: #77808c;
+}
+.task-editor .task-note-field textarea {
+  background: transparent;
+}
+.task-date-shortcuts button {
+  border-color: #dfe5ef;
+  background: #ffffffa8;
+  color: #5c6879;
+}
+.task-date-shortcuts button[aria-pressed="true"],
+.repeat-weekdays button[aria-pressed="true"],
+.repeat-workdays {
+  background: var(--mist-mint);
+  border-color: #b4d4c8;
+  color: #385c53;
+}
+.task-disclosure {
+  border-color: #e8ebf1;
+}
+.task-disclosure > summary small {
+  background: var(--mist-lilac);
+  color: #626183;
+}
+.task-editor-footer {
+  background: #fff;
+  border-top-color: #edf0f6;
+}
+.task-save,
+.sphere-preview-start {
+  background: #e4eff8;
+  color: #35445c;
+  border: 1px solid #d9dfed;
+  box-shadow: 0 4px 16px #8992b51a;
+}
+.task-save:hover,
+.sphere-preview-start:hover {
+  background: #e4eff8;
+}
+.task-done {
+  background: var(--mist-mint);
+  color: #3f6657;
+  border: 1px solid #d3e7dc;
+}
+.birthday-reminders {
+  background: var(--mist-warm);
+  color: #75566a;
+}
+.birthday-reminders p {
+  color: #775e70;
+}
+.date-picker-popover {
+  background: #e4eff8;
+  border-color: #e1e6f0;
+}
+.date-picker-grid button[aria-pressed="true"] {
+  background: var(--mist-cool);
+  color: #354867;
+  box-shadow: inset 0 0 0 1px #afbfdb;
+}
+.date-picker-grid button.today {
+  border-color: #acbdd5;
+}
+.date-picker-popover footer button {
+  color: #586d91;
+}
+/* Shared menus and time wheels. */
+.app-select-options button {
+  background: #edf4f6;
+  color: #424e60;
+}
+.app-select-options button[aria-selected="true"] {
+  background: var(--mist-cool);
+  border-color: #b9c8df;
+  color: #3f4c6b;
+}
+.app-select-dialog header button,
+.time-picker-cancel {
+  background: var(--mist-lilac);
+  color: #666182;
+}
+.time-wheel-scroll {
+  background: #edf4f6;
+}
+.time-wheel-number {
+  color: #65728a;
+}
+.time-wheel-number.selected {
+  color: #364564;
+}
+.time-wheel-colon {
+  color: #697893;
+}
+.time-picker-confirm {
+  background: #557bd0;
+  color: #fff;
+  box-shadow: 0 4px 14px #8d92b52b;
+}
+.time-picker-clear {
+  color: #626e82;
+}
+.time-picker-trigger svg {
+  color: #7484a1;
+}
+.miniature-picker button {
+  background: var(--mist-cool);
+  color: #6c7f9e;
+}
+.miniature-picker button:nth-child(3n + 2) {
+  background: var(--mist-warm);
+  color: #ad7683;
+}
+.miniature-picker button:nth-child(3n) {
+  background: var(--mist-mint);
+  color: #5b917e;
+}
+.miniature-picker button[aria-pressed="true"] {
+  background: var(--mist-lilac);
+  color: #69518c;
+  border-color: #b8a7d3;
+  box-shadow: 0 0 14px #c9b7e343;
+}
+/* Calendar and Gantt use the same atmosphere, with clear selected states. */
+dialog.calendar-sheet {
+  --accent: #667eaa;
+  --line: #e0e6ef;
+  background: #e4eff8;
+  color: #354253;
+}
+.planner-surface {
+  background: #ffffffed;
+  border: 1px solid #ffffffdf;
+}
+.planner-close,
+.planner-navigation button {
+  background: #ffffffbb;
+  color: #566784;
+  border: 1px solid #fff;
+}
+.planner-modes {
+  background: #ffffff80;
+  border: 1px solid #ffffffb8;
+}
+.planner-modes button {
+  color: #55617a;
+}
+.planner-modes button[aria-pressed="true"] {
+  background: #e4eff8;
+  color: #fff;
+  box-shadow: 0 3px 10px #7c85aa24;
+}
+.planner-month button[aria-pressed="true"] {
+  background: #e4eff8;
+  color: #fff;
+  box-shadow: 0 3px 12px #8583aa30;
+}
+.planner-month button.today {
+  box-shadow: inset 0 0 0 1px #aebed7;
+}
+.planner-month button:not([aria-pressed="true"]):hover {
+  background: #edf2fa;
+}
+.planner-day-heading button {
+  background: var(--mist-mint);
+  color: #4d7c6a;
+}
+.planner-task {
+  background: #e4eff8;
+  border: 1px solid #e7eaf3;
+}
+.planner-task:nth-of-type(3n + 2) {
+  background: var(--mist-lilac);
+}
+.planner-task small,
+.planner-empty,
+.planner-completed {
+  color: #647083;
+}
+.planner-demo {
+  color: #596a85;
+}
+.planner-completed input,
+.planner .gantt-panel {
+  background: transparent;
+}
+.planner .gantt-bar {
+  background: #8daee7;
+  border: 1px solid #ffffff70;
+  box-shadow: 0 2px 5px #8193bd12;
+}
+.planner .gantt-bar span {
+  background: #8daee7;
+}
+.gantt-zoom-controls {
+  background: var(--mist-cool);
+}
+.gantt-zoom-controls button {
+  color: #566c8b;
+}
+.gantt-period,
+.gantt-zoom-controls output {
+  color: #50617a;
+}
+.mobile-friendly .gantt-scroll {
+  border-color: #e0e6f1;
+}
+.mobile-friendly .gantt-today {
+  background: #e9f0fb;
+}
+:is(
+    .task-editor,
+    .area-editor,
+    .calendar-sheet,
+    .app-select-dialog,
+    .time-picker-dialog
+  )
+  :is(button, input, textarea):focus-visible {
+  outline: 2px solid #7b91b6;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-transparency: reduce) {
+  dialog::backdrop {
+    backdrop-filter: none;
+  }
+  .planner-surface {
+    background: #fff;
+  }
+}
+
+/* Keep orbit movement on composited transforms; avoid reblurring the full scene. */
+.sphere-item {
+  transition-property: transform, opacity;
+}
+.is-dragging .sphere-item {
+  transition: none;
+}
+dialog.task-editor::backdrop,
+dialog.area-editor::backdrop,
+.sphere-preview::backdrop,
+.calendar-sheet::backdrop,
+.app-select-dialog::backdrop,
+.time-picker-dialog::backdrop {
+  backdrop-filter: none;
+}

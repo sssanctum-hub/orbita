@@ -1,0 +1,1522 @@
+/*
+  Visual style 1.1: black and white, pale-blue cards, a dot-matrix date and a few
+  loud accents (yellow, warm gradient, orange). Loaded last, so it overrides the
+  earlier soft theme. Fonts are system fonts: Roboto on Android, Inter if installed.
+*/
+:root {
+  --m-sans:
+    "Inter Tight", "Helvetica Neue", Roboto, "Segoe UI", Arial, system-ui,
+    sans-serif;
+  --m-ink: #0b0b0c;
+  --m-paper: #fff;
+  --m-blue: #dff0f5;
+  --m-blue-deep: #c3dde5;
+  --m-yellow: #f4cb69;
+  --m-orange: #e58e75;
+  --m-cobalt: #547edb;
+  --m-muted: #5d6a70;
+  --m-grad: #b67dc4;
+  --m-grad-warm: #efa88a;
+  font-family: var(--m-sans);
+  --mist-ink: var(--m-ink);
+  --mist-muted: var(--m-muted);
+  --mist-line: #cfe3e9;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--m-sans);
+}
+
+/* ---------- Home ---------- */
+.today-home {
+  --poster-ink: var(--m-ink);
+  --poster-accent: var(--m-orange);
+  --poster-font: var(--m-sans);
+  --poster-core: var(--m-ink);
+  background: var(--m-paper);
+  color: var(--m-ink);
+}
+.today-home .today-band span,
+.today-home .planner-modes button,
+.today-home .planner-navigation button:nth-child(2),
+.today-home .planner-completed,
+.today-home .planner-demo,
+.today-home .day-all-day h3,
+.today-home .day-hour-label,
+.today-home .day-event small,
+.today-home .day-event-time {
+  font-family: var(--m-sans);
+}
+.today-home .today-home .today-home .today-poster h1 {
+  margin: 0;
+  line-height: 0;
+  color: var(--m-ink);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.today-home .dot-text {
+  display: block;
+}
+.today-home .today-band {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: flex-start;
+  white-space: normal;
+  overflow: visible;
+  text-transform: none;
+  font-size: var(--fs-s);
+}
+.today-home .today-band span {
+  font-size: var(--fs-s);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+}
+.today-home .today-planner .planner-navigation button,
+.today-home .planner-navigation button {
+  background: var(--m-blue);
+  border: 0;
+  box-shadow: none;
+  color: var(--m-ink);
+}
+.today-home .planner-navigation button:nth-child(2) {
+  font-size: var(--fs-s);
+  letter-spacing: 0.1em;
+}
+.today-home .planner-modes {
+  background: var(--m-ink);
+  box-shadow: none;
+  padding: 4px;
+}
+.today-home .planner-modes button {
+  background: none;
+  box-shadow: none;
+  color: #aab4b8;
+  font-size: var(--fs-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.today-home .planner-modes button[aria-pressed="true"] {
+  background: #fff;
+  box-shadow: none;
+  color: var(--m-ink);
+}
+.today-home .planner-surface {
+  background: var(--m-blue);
+  box-shadow: none;
+  border: 0;
+  border-radius: 34px;
+}
+.today-home .day-all-day h3 {
+  font-size: var(--fs-s);
+  letter-spacing: 0.1em;
+  color: var(--m-muted);
+}
+.today-home .day-hour-label {
+  font-size: var(--fs-s);
+  color: #5f7b85;
+}
+.today-home .day-hour-slot {
+  border-top-color: var(--m-blue-deep);
+}
+.today-home .day-hour-slot:hover {
+  background: #ffffff55;
+}
+.today-home .current-hour .day-hour-label {
+  color: var(--m-orange);
+}
+.today-home .day-now {
+  border-top-color: var(--m-orange);
+}
+.today-home .day-now:before {
+  background: var(--m-orange);
+}
+.today-home .day-hours {
+  scrollbar-color: var(--m-blue-deep) transparent;
+}
+
+/* Cards in the schedule */
+.today-home .day-event {
+  background: #fff;
+  color: var(--m-ink);
+  border-radius: 24px;
+}
+.today-home .day-placed .day-event {
+  box-shadow: none;
+}
+.today-home .day-event strong {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.today-home .day-event small {
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+  color: var(--m-muted);
+}
+.today-home .day-event-orb {
+  background: var(--m-blue);
+  color: var(--m-ink);
+}
+.today-home .day-event-time {
+  font-size: var(--fs-s);
+  padding: 3px 9px;
+  border: 1px solid #0b0b0c33;
+  border-radius: 999px;
+  color: var(--m-ink);
+}
+.today-home .day-event-time:empty {
+  display: none;
+}
+.today-home .day-event-line .day-event-time {
+  padding: 2px 8px;
+}
+.today-home .day-event-thin {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--event-color) 70%, #000);
+}
+.today-home .day-event.is-dragging {
+  outline: 2px solid var(--m-ink);
+}
+.today-home .day-all-day .day-event {
+  background: var(--m-yellow);
+  border-radius: 999px;
+  min-height: 56px;
+  padding: 8px 14px;
+}
+.today-home .day-all-day .day-event .day-event-orb {
+  background: #0b0b0c14;
+}
+.today-home .day-all-day .day-event small {
+  color: #0b0b0cb3;
+}
+/* Events "from–to": the loud warm-gradient card. */
+.today-home .day-event.is-range,
+.today-home .day-all-day .day-event.is-range {
+  background: var(--m-grad);
+  color: #fff;
+  box-shadow: none;
+}
+.today-home .day-event.is-range small {
+  color: #ffffffcc;
+}
+.today-home .day-event.is-range .day-event-orb {
+  background: #ffffff2e;
+  color: #fff;
+}
+.today-home .day-event.is-range .day-event-time {
+  border-color: #ffffff80;
+  color: #fff;
+}
+.today-home .day-event-thin.is-range {
+  background: var(--m-grad);
+}
+.today-home .day-event.is-done strong {
+  color: #6c7b81;
+}
+.today-home .day-free {
+  color: var(--m-muted);
+}
+.today-home .planner-completed {
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+  color: var(--m-muted);
+}
+.today-home .planner-completed input {
+  accent-color: var(--m-ink);
+}
+.today-home .planner-demo {
+  font-size: var(--fs-s);
+  color: var(--m-muted);
+}
+
+.today-toast {
+  background: var(--m-ink);
+}
+.today-toast button {
+  background: var(--m-yellow);
+  color: var(--m-ink);
+}
+
+/* ---------- Orbit ---------- */
+.orbit-app,
+.orbit-app .mobile-orbit-home {
+  background: var(--m-paper);
+  --sphere-ink: var(--m-ink);
+}
+.sphere-curve path {
+  stroke: var(--m-ink);
+  stroke-opacity: 0.55;
+}
+.sphere-marker {
+  background: var(--m-ink);
+  box-shadow: none;
+}
+.sphere-icon {
+  background: var(--m-blue);
+  border-color: transparent;
+  color: var(--m-ink);
+  box-shadow: none;
+}
+.sphere-item.selected .sphere-icon {
+  background: var(--m-ink);
+  border-color: var(--m-ink);
+  color: #fff;
+  box-shadow: none;
+}
+.sphere-title {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+}
+.sphere-item.selected .sphere-title {
+  background: var(--m-ink);
+  border-color: var(--m-ink);
+  color: #fff;
+  box-shadow: none;
+}
+.orbit-core {
+  background: var(--m-ink);
+  color: #fff;
+  border: 0;
+  box-shadow: none;
+}
+.orbit-add-area,
+.sphere-controls button,
+.sphere-remove-area {
+  background: var(--m-blue);
+  color: var(--m-ink);
+  border: 0;
+  box-shadow: none;
+}
+.orbit-core:hover,
+.orbit-add-area:hover,
+.sphere-controls button:hover {
+  background: var(--m-yellow);
+  color: var(--m-ink);
+}
+.sphere-reminder-dot {
+  background: var(--m-orange);
+  box-shadow: none;
+}
+
+/* ---------- Dialogs and the task editor ---------- */
+dialog.task-editor,
+dialog.area-editor,
+dialog.sphere-preview,
+.app-select-dialog,
+.time-picker-dialog,
+.calendar-sheet {
+  background: #fff;
+  color: var(--m-ink);
+  border: 0;
+  border-radius: 34px;
+  box-shadow: 0 24px 80px #0000003d;
+}
+dialog.task-editor::backdrop,
+dialog.area-editor::backdrop,
+.sphere-preview::backdrop,
+.calendar-sheet::backdrop,
+.app-select-dialog::backdrop,
+.time-picker-dialog::backdrop {
+  background: #0b0b0c73;
+  backdrop-filter: none;
+}
+.task-editor-header {
+  background: none;
+}
+.task-editor-header h2,
+.area-editor h2 {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-ink);
+}
+.task-editor-back {
+  background: var(--m-blue);
+  color: var(--m-ink);
+}
+.task-editor-emblem {
+  background: var(--m-yellow);
+  color: var(--m-ink);
+  box-shadow: none;
+}
+.task-area-select > label,
+.task-note-field,
+.task-field-hint,
+.task-reminder-caption span {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+  color: var(--m-muted);
+}
+.task-area-select select,
+.app-select-trigger {
+  background: var(--m-blue);
+  border: 0;
+  border-radius: 999px;
+  color: var(--m-ink);
+  font-weight: 600;
+}
+.task-title-field textarea {
+  font-family: var(--m-sans);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--m-ink);
+}
+.task-title-field textarea::placeholder {
+  color: #9aa6ab;
+}
+.task-kind-switch {
+  background: var(--m-ink);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+.task-kind-switch button {
+  min-height: 40px;
+  border-radius: 999px;
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #aab4b8;
+  background: none;
+}
+.task-kind-switch button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--m-ink);
+  box-shadow: none;
+}
+.task-choice-card {
+  border: 0;
+  border-radius: 28px;
+  box-shadow: none;
+  color: var(--m-ink);
+  background: var(--m-blue);
+}
+.task-choice-card.task-reminder-card {
+  background: var(--m-yellow);
+}
+.task-choice-card > span,
+.task-choice-card small {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+  color: #0b0b0cb3;
+}
+.task-choice-card strong {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--m-ink);
+}
+.task-choice-card[aria-expanded="true"] {
+  outline: 2px solid var(--m-ink);
+  outline-offset: 1px;
+}
+.task-inline-panel,
+.task-event-range,
+.task-note-field textarea,
+.repeat-editor-body,
+.task-more-fields {
+  background-color: transparent;
+}
+.task-inline-panel {
+  background: #f1f7f9;
+  border-radius: 26px;
+}
+.task-date-shortcuts button {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  border: 1px solid #0b0b0c2e;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--m-ink);
+}
+.task-date-shortcuts button[aria-pressed="true"] {
+  background: var(--m-ink);
+  color: #fff;
+  border-color: var(--m-ink);
+}
+.date-picker-trigger,
+.time-picker-trigger {
+  background: #fff;
+  border: 1px solid #0b0b0c1f;
+  border-radius: 20px;
+  color: var(--m-ink);
+}
+.task-event-range legend,
+.date-picker-label,
+.time-wheel-caption {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--m-muted);
+}
+.task-note-field textarea {
+  background: #f1f7f9;
+  border: 0;
+  border-radius: 22px;
+}
+.task-disclosure {
+  border-color: #0b0b0c1a;
+}
+.task-disclosure summary {
+  font-weight: 600;
+}
+.task-save {
+  background: var(--m-ink);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  font-family: var(--m-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: var(--fs-s);
+}
+.task-save:disabled {
+  opacity: 0.5;
+}
+.task-done {
+  background: var(--m-yellow);
+  color: var(--m-ink);
+  border: 0;
+  border-radius: 999px;
+}
+.task-delete,
+.task-delete-confirm button:first-of-type {
+  color: var(--m-orange);
+}
+.task-editor-error {
+  color: var(--m-orange);
+}
+.task-step input[type="checkbox"],
+.planner-completed input {
+  accent-color: var(--m-ink);
+}
+.repeat-weekdays button[aria-pressed="true"] {
+  background: var(--m-ink);
+  color: #fff;
+}
+.time-picker-confirm {
+  background: var(--m-ink);
+  color: #fff;
+}
+.time-wheel-scroll {
+  background: var(--m-blue);
+}
+.app-select-options button[aria-selected="true"],
+.app-select-options [aria-selected="true"] {
+  background: var(--m-ink);
+  color: #fff;
+}
+
+/* ---------- Gantt ---------- */
+.today-home .gantt-panel {
+  background: none;
+}
+.today-home .gantt-period,
+.today-home .gantt-period small,
+.gantt-help,
+.today-home .gantt-head small {
+  font-family: var(--m-sans);
+  color: var(--m-muted);
+}
+.today-home .gantt-period {
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+}
+.today-home .gantt-zoom-controls {
+  background: #fff;
+  box-shadow: none;
+}
+.today-home .gantt-zoom-controls button {
+  background: var(--m-ink);
+  color: #fff;
+  box-shadow: none;
+  border: 0;
+}
+.today-home .gantt-zoom-controls output {
+  font-family: var(--m-sans);
+  color: var(--m-ink);
+}
+.today-home .gantt-sheet,
+.today-home .gantt-scroll {
+  background: #fff;
+}
+.today-home .gantt-scroll {
+  border-radius: 24px;
+}
+.today-home .gantt-head > span,
+.today-home .gantt-row > button {
+  background: #fff;
+  color: var(--m-ink);
+}
+.today-home .gantt-head > div > span {
+  color: var(--m-ink);
+  font-family: var(--m-sans);
+}
+.today-home .gantt-head .gantt-today,
+.today-home .mobile-friendly .gantt-today,
+.today-home .gantt-today {
+  background: var(--m-ink);
+  color: #fff !important;
+  border-radius: 12px;
+}
+.today-home .gantt-row > button small {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  color: var(--m-muted);
+}
+.today-home .gantt-track,
+.today-home .gantt-row {
+  border-color: var(--m-blue-deep);
+}
+.planner .gantt-bar,
+.today-home .planner .gantt-bar,
+.today-home .gantt-bar {
+  background: var(--m-grad-warm);
+  border: 0;
+  box-shadow: none;
+  color: var(--m-ink);
+}
+.today-home .gantt-bar > span {
+  background: #ffffff8c;
+}
+.today-home .gantt-bar.milestone {
+  background: transparent !important;
+  color: var(--m-ink);
+  box-shadow: none;
+}
+.today-home .gantt-bar.event,
+.today-home .planner .gantt-bar.event {
+  background: var(--m-grad);
+  background-image: var(--m-grad);
+  color: #fff;
+  border: 0;
+}
+.today-home .gantt-bar.event em {
+  font-family: var(--m-sans);
+}
+.today-home .dependency-lines {
+  color: var(--m-ink);
+}
+
+/* ---------- Week, month, other planner bits ---------- */
+.today-home .planner-agenda h3,
+.today-home .planner-weekday,
+.today-home .planner-empty {
+  font-family: var(--m-sans);
+  letter-spacing: 0.06em;
+  color: var(--m-muted);
+}
+.today-home .planner-day-heading button {
+  background: var(--m-ink);
+  color: #fff;
+  border: 0;
+}
+.today-home .planner-task {
+  background: #fff;
+  border: 0;
+  border-radius: 22px;
+  box-shadow: none;
+  color: var(--m-ink);
+}
+.today-home .planner-task small {
+  font-family: var(--m-sans);
+  color: var(--m-muted);
+}
+.today-home .planner-month button {
+  background: #fff;
+  border: 0;
+  border-radius: 16px;
+  color: var(--m-ink);
+  box-shadow: none;
+}
+.today-home .planner-month button.outside {
+  background: #ffffff66;
+  color: #7f9097;
+}
+.today-home .planner-month button.today {
+  background: var(--m-ink);
+  color: #fff;
+}
+.today-home .planner-month button[aria-pressed="true"] {
+  outline: 2px solid var(--m-ink);
+}
+.today-home .planner-month small {
+  font-family: var(--m-sans);
+  color: var(--m-orange);
+}
+.today-notice {
+  background: var(--m-blue);
+  color: var(--m-ink);
+  border-radius: 26px;
+}
+.today-notice button {
+  background: var(--m-ink);
+  color: #fff;
+  border-radius: 999px;
+}
+.voice-listen {
+  background: var(--m-yellow);
+  color: var(--m-ink);
+}
+.voice-preview {
+  background: var(--m-blue);
+}
+.today-home .gantt-today strong,
+.today-home .gantt-today small {
+  color: #fff;
+}
+.task-kind-switch button {
+  color: #c9d1d4;
+}
+.task-kind-switch button[aria-pressed="true"] {
+  color: var(--m-ink);
+}
+.today-home .planner-modes button {
+  color: #c9d1d4;
+}
+.today-home .planner-modes button[aria-pressed="true"] {
+  color: var(--m-ink);
+}
+
+/* Pickers */
+.date-picker-popover {
+  background: #fff;
+  border: 1px solid #0b0b0c1a;
+  border-radius: 26px;
+  box-shadow: none;
+}
+.date-picker-popover header strong {
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.date-picker-popover header button {
+  background: var(--m-blue);
+  color: var(--m-ink);
+}
+.date-picker-grid > span {
+  font-family: var(--m-sans);
+  color: var(--m-muted);
+}
+.date-picker-grid button {
+  border-radius: 50%;
+  color: var(--m-ink);
+}
+.date-picker-grid button.outside {
+  color: #9db0b6;
+}
+.date-picker-grid button.today {
+  outline: 1.5px solid var(--m-ink);
+  background: transparent;
+}
+.date-picker-grid button[aria-pressed="true"] {
+  background: var(--m-ink);
+  color: #fff;
+}
+.date-picker-grid button:hover {
+  background: var(--m-blue);
+}
+.date-picker-popover footer button {
+  background: var(--m-blue);
+  color: var(--m-ink);
+  border-radius: 999px;
+  font-family: var(--m-sans);
+  font-size: var(--fs-s);
+  letter-spacing: 0.06em;
+}
+.time-picker-cancel {
+  background: var(--m-blue);
+  color: var(--m-ink);
+}
+.time-wheel-column,
+.time-wheel-scroll,
+.time-wheel-colon {
+  color: var(--m-ink);
+}
+
+/* ---------- Bottom dock: year (soon) · add a task · voice ---------- */
+.today-dock {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px 0;
+}
+.today-dock .dock-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--m-ink);
+}
+.today-dock .dock-button:disabled {
+  opacity: 0.4;
+}
+.today-dock .dock-year {
+  background: var(--m-ink);
+  color: #fff;
+}
+.today-dock .dock-voice {
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--m-ink);
+}
+/* The round add button: black rim with a glowing lime core. */
+.today-dock .dock-add {
+  width: 76px;
+  height: 76px;
+  background: var(--m-ink);
+  box-shadow: 0 8px 26px #8bd0173d;
+}
+.today-dock .dock-add::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: #e4eff8;
+  box-shadow: 0 0 22px #b5f23c99;
+}
+.today-dock .dock-add svg {
+  position: relative;
+}
+@media (max-height: 720px) {
+  .today-dock {
+    padding-top: 8px;
+  }
+  .today-dock .dock-button {
+    width: 44px;
+    height: 44px;
+  }
+  .today-dock .dock-add {
+    width: 62px;
+    height: 62px;
+  }
+}
+
+/* ---------- Orbit switch in a white notch on the calendar's edge ---------- */
+.orbit-switch {
+  position: absolute;
+  z-index: 5;
+  right: -2px;
+  /* The button centre is at 50% of the screen height, like the orbit's core. */
+  top: calc(50dvh - var(--home-pt, 20px) - 45.3px);
+  width: 40px;
+  height: 90.6px;
+  pointer-events: none;
+}
+.orbit-switch svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: var(--m-paper);
+}
+.orbit-switch-button {
+  position: absolute;
+  left: 10px;
+  top: 23.3px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--m-ink);
+  pointer-events: auto;
+}
+.orbit-switch-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--m-yellow);
+}
+
+/* Hover (it sticks after a tap on phones): keep to the new palette. */
+.task-save:hover:not(:disabled),
+.sphere-preview-start:hover {
+  background: #26282b;
+  color: #fff;
+}
+.sphere-preview-start {
+  background: var(--m-ink);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+}
+.task-editor-back:hover,
+.sphere-remove-area:hover {
+  background: #cde6ee;
+}
+.today-home .planner-month button:not([aria-pressed="true"]):not(.today):hover {
+  background: #f4fafc;
+}
+.today-home .planner-month button.today:hover {
+  background: var(--m-ink);
+}
+
+/* Calendar 1.0.8: full-width navigation, load map and seven compact week rows. */
+.planner .planner-navigation {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 52px;
+  width: 100%;
+}
+.planner .planner-navigation button:nth-child(2) {
+  width: 100%;
+  max-width: none;
+}
+.planner .planner-month {
+  gap: 7px;
+  margin: 0;
+}
+.planner .planner-month button {
+  --day-fill: #fff;
+  background: var(--day-fill) !important;
+  color: #101c18 !important;
+  min-height: 54px;
+  border: 1px solid #13282012;
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px;
+  box-shadow: none;
+}
+.planner .planner-month button.load-low {
+  --day-fill: #70cfa4;
+}
+.planner .planner-month button.load-medium {
+  --day-fill: #efb36d;
+}
+.planner .planner-month button.load-high {
+  --day-fill: #ee9390;
+}
+.planner .planner-month button.outside {
+  opacity: 0.45;
+}
+.planner .planner-month button.today {
+  outline: 2px solid #172b24;
+  outline-offset: -3px;
+}
+.planner .planner-month button[aria-pressed="true"] {
+  outline: 2px solid #172b24;
+  outline-offset: 2px;
+}
+.planner .planner-month button small {
+  align-self: flex-end;
+  color: #183127;
+  font-size: 11px;
+  line-height: 1;
+}
+.week-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.week-line {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 70px;
+}
+.week-day-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 52px;
+  min-height: 58px;
+  padding: 6px;
+  border-radius: 24px;
+  background: #fff;
+  color: #161a19;
+}
+.week-day-bubble span {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.week-day-bubble strong {
+  font-size: 22px;
+  font-weight: 600;
+}
+.week-day-bubble.is-today {
+  background: #141716;
+  color: #fff;
+}
+.week-line-tasks {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  min-width: 0;
+  padding: 4px 0;
+  scrollbar-width: none;
+  border-bottom: 1px solid #15282016;
+  overscroll-behavior-x: contain;
+}
+.planner .week-line-tasks .planner-task {
+  flex: 0 0 175px;
+  width: 175px;
+  margin: 0;
+  border-radius: 18px;
+  min-height: 60px;
+  padding: 10px 12px;
+}
+.planner .week-line-tasks .planner-task strong {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.week-free {
+  color: #60756e;
+  font-size: 13px;
+  padding: 18px 8px;
+}
+dialog.calendar-day-bubble {
+  width: min(420px, calc(100vw - 32px));
+  max-height: min(78dvh, 650px);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ffffffab;
+  border-radius: 32px;
+  color: #17231e;
+  background: #f0f8f5;
+  box-shadow: 0 18px 60px #10251e30;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.calendar-day-bubble::backdrop {
+  background: #17251f55;
+  backdrop-filter: none;
+}
+.calendar-day-bubble header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.calendar-day-bubble h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.calendar-day-bubble header button {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  flex: 0 0 40px;
+  height: 40px;
+  background: #fff;
+}
+.calendar-day-list {
+  display: grid;
+  gap: 8px;
+}
+.planner .calendar-day-list .planner-task {
+  margin: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 20px;
+  padding: 14px;
+}
+.calendar-day-add {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 24px;
+  background: #18251f;
+  color: white;
+  margin-top: 16px;
+}
+.calendar-day-add:disabled {
+  opacity: 0.45;
+}
+.today-dock .dock-year[aria-pressed="true"] {
+  background: #d3f29b;
+  color: #132313;
+  box-shadow: inset 0 0 0 2px #132313;
+}
+.gantt-scroll {
+  touch-action: pan-x pan-y;
+}
+@media (max-width: 360px) {
+  .planner .planner-month {
+    gap: 4px;
+  }
+  .planner .planner-month button {
+    padding: 6px;
+    min-height: 48px;
+    border-radius: 13px;
+  }
+}
+
+/* 1.0.9: reference palette and protected orbit-switch space. */
+:root {
+  --m-blue: #e0f1f3;
+  --m-ink: #101918;
+  --m-yellow: #f4cb69;
+  --m-paper: #fff;
+}
+.today-home {
+  background: #fff;
+}
+.today-home .planner-surface {
+  background: #e0f1f3;
+  box-shadow: none;
+}
+.today-home .today-planner .planner-navigation button {
+  background: #e0f1f3;
+  color: #101918;
+  border: 0;
+  box-shadow: none;
+}
+.today-home .today-planner .planner-navigation button:nth-child(2) {
+  background: #547edb;
+  color: #fff;
+}
+.today-home .day-schedule {
+  padding-right: 32px;
+}
+.today-home .day-event {
+  background: #f4cb69;
+  color: #101918;
+  box-shadow: none;
+}
+.today-home .day-event small,
+.today-home .day-event-time {
+  color: #292919;
+}
+.today-home .day-event-orb {
+  background: #ffffff80;
+  color: #101918;
+}
+.today-home .day-event.is-range {
+  background: #66c991;
+}
+.today-home .day-event.is-done {
+  background: #d2d5d4;
+}
+.day-placed > .day-event,
+.day-all-day-slot > .day-event {
+  transform-origin: left center;
+  scale: var(--pressure-scale, 1) 1;
+  transition: scale 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Permanent clearance prevents contact even during a fast fling; only nearby
+   cards get the extra animated squeeze. No full-screen animation layers. */
+.today-home .showing-month .planner-surface {
+  padding-right: 44px;
+}
+.today-home .week-lines {
+  padding-right: 28px;
+}
+.week-line-tasks {
+  padding: 10px 6px;
+  gap: 20px;
+  min-height: 78px;
+}
+.week-sphere-bubble {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+.week-sphere-face {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--sphere-tint);
+  color: #101918;
+  border: 2px solid #fff;
+}
+.week-sphere-bubble.is-done .week-sphere-face {
+  color: #101918;
+}
+.stack-sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #101918;
+  border: 2px solid #e0f1f3;
+  pointer-events: none;
+}
+.stack-sheet.back {
+  transform: translate(10px, -6px);
+  opacity: 0.28;
+}
+.stack-sheet.front {
+  transform: translate(5px, -3px);
+  opacity: 0.6;
+}
+.week-stack-count {
+  position: absolute;
+  z-index: 3;
+  right: -5px;
+  bottom: -2px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #101918;
+  color: #fff;
+  font-size: 11px;
+  border: 2px solid #e0f1f3;
+}
+.week-done-mark {
+  position: absolute;
+  bottom: 4px;
+  right: 5px;
+}
+.week-sphere-bubble:active {
+  scale: 0.94;
+}
+.week-sphere-bubble {
+  transition: scale 0.18s ease-out;
+}
+.stack-area-title {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+/* Fill the month field with six equal week rows, including on short screens. */
+.today-planner.showing-month .planner-month {
+  flex: 1 0 auto;
+  grid-template-rows: auto repeat(6, minmax(44px, 1fr));
+}
+.today-planner.showing-month .planner-month button {
+  min-height: 44px;
+}
+.week-task-slot {
+  min-width: 0;
+}
+.week-task-slot > .week-line-tasks {
+  transform-origin: left center;
+  scale: var(--pressure-scale, 1) 1;
+  transition: scale 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sphere-icon,
+.sphere-item.selected .sphere-icon {
+  background: var(--sphere-color);
+  color: #101918;
+  border-color: transparent;
+  box-shadow: none;
+}
+.sphere-item.selected .sphere-icon {
+  outline: 2px solid #101918;
+  outline-offset: 3px;
+}
+.calendar-day-bubble {
+  background: #e0f1f3 !important;
+}
+.calendar-day-bubble .planner-task.done strong {
+  text-decoration: line-through;
+}
+.today-dock .dock-add {
+  background: #101918;
+  box-shadow: none;
+}
+.today-dock .dock-add::before {
+  background: #66c991;
+  box-shadow: none;
+}
+.today-dock .dock-voice {
+  background: #f4cb69;
+  box-shadow: none;
+}
+.today-dock .dock-year,
+.today-dock .dock-year[aria-pressed="true"] {
+  background: #101918;
+  color: #fff;
+}
+.today-dock .dock-year[aria-pressed="true"] {
+  outline: 3px solid #66c991;
+  outline-offset: 2px;
+}
+.task-save,
+.task-done,
+.sphere-preview-start {
+  background: #101918;
+  color: #fff;
+  border-radius: 999px;
+  box-shadow: none;
+}
+.task-editor .task-save,
+.task-editor .task-save:hover:not(:disabled) {
+  background: #66c991;
+  color: #101918;
+}
+.task-editor .task-done {
+  background: #101918;
+  color: #fff;
+  border: 2px solid #66c991;
+}
+.task-editor .task-kind-switch {
+  margin-bottom: 20px;
+}
+.task-editor .task-title-field textarea,
+.task-editor .task-note-field textarea {
+  resize: none;
+  overflow: hidden;
+  max-height: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  display: block;
+  overflow-wrap: anywhere;
+}
+.task-editor .task-note-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f1f7f9;
+}
+.task-editor .task-note-field textarea {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  color: #101918;
+  letter-spacing: normal;
+  text-align: left;
+  line-height: 1.45;
+}
+.backlog-button {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: start;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: #101918;
+  color: #fff;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+.backlog-menu section + section {
+  margin-top: 22px;
+}
+.backlog-menu section h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #5d6a70;
+  margin: 0 0 10px;
+}
+
+/* Width reflows card contents; circle faces always keep their proportions. */
+.day-placed > .day-event {
+  scale: none;
+  width: calc(100% - var(--pressure-inset, 0px));
+  overflow: hidden;
+  transition: width 140ms ease-out;
+}
+.day-event-text {
+  min-width: 0;
+  overflow: hidden;
+}
+.day-event-text strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  hyphens: none;
+}
+.day-event-orb,
+.day-event-time {
+  flex-shrink: 0;
+}
+.today-home .day-schedule {
+  padding-right: 8px;
+}
+.today-home .week-lines {
+  padding-right: 10px;
+}
+.week-task-slot > .week-line-tasks {
+  scale: none;
+  transition: none;
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 14px;
+  padding: 14px 16px 14px 6px;
+}
+.week-bubble-slot {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+}
+.week-bubble-slot > .week-sphere-bubble {
+  transform: translateX(calc(-1 * var(--bubble-shift, 0px)));
+  transition: transform 140ms ease-out;
+}
+.week-sphere-bubble:active {
+  scale: none;
+}
+.today-home .today-band {
+  grid-column: 2;
+  align-self: center;
+  gap: 8px;
+}
+.today-home .today-band > span {
+  font-size: clamp(10px, 2.9vw, 13px);
+  letter-spacing: 0.08em;
+}
+.today-home .today-poster {
+  column-gap: 12px;
+  align-items: center;
+}
+.today-home .today-poster h1 {
+  line-height: 0;
+}
+.today-home .today-poster h1 svg {
+  width: clamp(76px, 25vw, 115.5px);
+  height: auto;
+}
+.backlog-button {
+  width: 56px;
+  height: 56px;
+  align-self: center;
+}
+.backlog-button .dot-text {
+  width: 27px;
+  height: 34px;
+}
+.backlog-menu h2 {
+  text-transform: none;
+}
+.gantt-track {
+  background-color: #edf4f6;
+}
+.planner .gantt-bar.event {
+  background: #aa9bd9;
+  border: 1px dashed #66588b;
+}
+.task-press-host {
+  display: contents;
+}
+[data-task-id] {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+dialog.task-quick-menu {
+  width: min(380px, calc(100vw - 32px));
+  margin: auto;
+  padding: 22px;
+  border: 0;
+  border-radius: 32px;
+  background: #edf5f7;
+  color: #101918;
+  box-shadow: 0 16px 50px #10191825;
+}
+.task-quick-menu::backdrop {
+  background: #10191855;
+  backdrop-filter: none;
+}
+.task-quick-menu header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.task-quick-menu h2 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 20px;
+  overflow-wrap: anywhere;
+}
+.task-quick-menu header button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+.task-quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.task-quick-buttons p {
+  width: 100%;
+  margin: 0;
+}
+.task-quick-buttons button {
+  flex: 1;
+  min-height: 70px;
+  border-radius: 28px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff;
+}
+.task-quick-buttons .quick-complete {
+  background: #101918;
+  color: #fff;
+  border: 2px solid #66c991;
+}
+.task-quick-buttons .quick-delete {
+  background: #f4aaa0;
+  color: #341d1a;
+}
+.task-quick-buttons button:disabled {
+  opacity: 0.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .day-placed > .day-event,
+  .week-bubble-slot > .week-sphere-bubble {
+    transition: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .day-event,
+  .week-sphere-bubble,
+  .week-task-slot > .week-line-tasks {
+    transition: none !important;
+  }
+}

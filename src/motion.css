@@ -1,0 +1,131 @@
+/* Fast local feedback. Screen geometry stays static. */
+:root {
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-press: 80ms;
+  --motion-control: 120ms;
+  --motion-sheet: 120ms;
+}
+:where(button, .attached-link a) {
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    scale 100ms var(--ease-out),
+    opacity 100ms linear;
+}
+:where(button:not(:disabled), .attached-link a):active {
+  scale: 0.97;
+}
+:is(.day-event, .sphere-item, .week-sphere-bubble):active {
+  scale: 1;
+}
+.day-event.is-dragging,
+.day-event.is-dragging:active {
+  scale: 1;
+  transition: none;
+}
+.sphere-item .sphere-icon,
+.week-sphere-face {
+  transition: scale 100ms var(--ease-out);
+}
+.sphere-item:active .sphere-icon,
+.week-sphere-bubble:active .week-sphere-face {
+  scale: 0.97;
+}
+.sphere-stage.is-dragging .sphere-icon {
+  scale: 1;
+  transition: none;
+}
+.sphere-item {
+  transition:
+    transform 140ms var(--ease-out),
+    opacity 120ms linear;
+}
+.sphere-stage.is-dragging .sphere-item {
+  transition: none;
+}
+dialog.task-editor {
+  overflow: clip;
+}
+dialog[open],
+.time-picker-dialog[open],
+.sticker-viewer[open] {
+  animation: local-fade 120ms ease-out;
+}
+dialog[open]::backdrop {
+  backdrop-filter: none;
+  animation: local-fade 100ms linear;
+}
+dialog[data-exiting]::backdrop {
+  animation: local-fade-out 100ms linear forwards;
+}
+@keyframes local-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes local-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+.today-home .planner-modes,
+.task-kind-switch {
+  position: relative;
+  isolation: isolate;
+}
+.planner-modes-thumb,
+.task-kind-thumb {
+  display: none !important;
+}
+.today-home .planner-modes button,
+.task-kind-switch button {
+  position: relative;
+  z-index: 1;
+}
+.today-home .planner-modes button[aria-pressed="true"],
+.task-kind-switch button[aria-pressed="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+.app-select-trigger > svg {
+  transition: rotate 100ms var(--ease-out);
+}
+.app-select-trigger[aria-expanded="true"] > svg {
+  rotate: 180deg;
+}
+.date-picker-popover,
+.task-inline-panel:not([hidden]),
+.voice-preview,
+.task-delete-confirm,
+.task-quick-buttons,
+.today-toast {
+  animation: local-fade 100ms ease-out;
+}
+/* No slide/scale, no duplicate screen tree during navigation. */
+.today-planner .planner-surface.slide-from-right,
+.today-planner .planner-surface.slide-from-left,
+.year-month-panels,
+.dot-text,
+.today-home,
+.mobile-orbit-home {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  button:active,
+  .attached-link a:active,
+  .sphere-item:active .sphere-icon,
+  .week-sphere-bubble:active .week-sphere-face {
+    scale: 1 !important;
+  }
+}

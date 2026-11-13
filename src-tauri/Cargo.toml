@@ -1,0 +1,38 @@
+[package]
+name = "personal_assistant"
+version = "2.0.25"
+description = "Орбита — личный органайзер"
+authors = ["Максим"]
+edition = "2021"
+rust-version = "1.99"
+
+[lib]
+name = "personal_assistant_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "=2.7.2", features = [] }
+
+[dependencies]
+tauri = { version = "=2.12.3", features = [] }
+tauri-plugin-notification = "=2.6.0"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+rusqlite = { version = "=0.40.2", features = ["bundled"] }
+uuid = { version = "=1.28.0", features = ["v4", "serde"] }
+chrono = { version = "=0.4.45", features = ["serde", "clock"] }
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri = { version = "=2.12.3", features = ["tray-icon"] }
+tauri-plugin-global-shortcut = "=2.4.1"
+tauri-plugin-single-instance = "=2.5.3"
+
+[dev-dependencies]
+tempfile = "=3.27.0"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
