@@ -30,6 +30,8 @@ Thumbs.db
 /.chart-data-*/
 /output/
 /outputs/
+/release-output/
+/unsigned-apk/
 /tmp/
 /corrected_articles/
 /.claude/

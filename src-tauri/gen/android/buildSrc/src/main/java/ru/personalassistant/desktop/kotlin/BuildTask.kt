@@ -23,7 +23,7 @@ abstract class BuildTask : DefaultTask() {
 
     @TaskAction
     fun assemble() {
-        val executable = """C:\Projects\PersonalAssistant\.tools\node\node""";
+        val executable = System.getenv("NODE_BINARY") ?: "node";
         try {
             runTauriCli(executable)
         } catch (e: Exception) {
@@ -55,7 +55,7 @@ abstract class BuildTask : DefaultTask() {
         val rootDirRel = rootDirRel ?: throw GradleException("rootDirRel cannot be null")
         val target = target ?: throw GradleException("target cannot be null")
         val release = release ?: throw GradleException("release cannot be null")
-        val args = listOf("tauri", "android", "android-studio-script");
+        val args = listOf("node_modules/@tauri-apps/cli/tauri.js", "android", "android-studio-script");
 
         execOperations.exec {
             workingDir(File(projectDir, rootDirRel))

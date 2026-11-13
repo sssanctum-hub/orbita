@@ -1,0 +1,164 @@
+name: Build APK and deploy web
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish APK, update the live website and notify Telegram'
+        type: boolean
+        default: false
+  push:
+    tags: ['v*']
+    branches: [main]
+    paths:
+      - .github/workflows/release.yml
+      - scripts/ci-release.mjs
+
+permissions:
+  contents: read
+
+concurrency:
+  group: orbita-release
+  cancel-in-progress: false
+
+env:
+  VITE_ACCOUNT_API: https://functions.yandexcloud.net/d4ej4ac4vfdmgtuhc506
+  ORBITA_WEB_URL: https://orbita-sssanctum.website.yandexcloud.net/
+  ORBITA_BUCKET: orbita-sssanctum
+  ANDROID_CERT_SHA256: 25daa3a56f5b530a48b5623812fa547fd29a805fb3857774a3dbd9e48c5909a6
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      tag: ${{ steps.metadata.outputs.tag }}
+      version: ${{ steps.metadata.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - id: metadata
+        run: node scripts/ci-release.mjs metadata
+      - run: npm ci
+      - run: npm test
+      - run: node --test scripts/*.test.mjs
+      - run: npm run build
+      - run: node scripts/ci-release.mjs web-manifest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK
+        run: |
+          sdkmanager "platforms;android-37.0" "build-tools;37.0.0" "ndk;27.2.12479018"
+          echo "NDK_HOME=$ANDROID_HOME/ndk/27.2.12479018" >> "$GITHUB_ENV"
+      - name: Install Rust and host dependencies
+        run: |
+          rustup toolchain install 1.99.0 --profile minimal
+          rustup target add aarch64-linux-android --toolchain 1.99.0
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential libssl-dev librsvg2-dev libayatana-appindicator3-dev patchelf
+      - name: Build Android ARM64
+        run: |
+          chmod +x src-tauri/gen/android/gradlew
+          npm run tauri -- android init --ci --skip-targets-install
+          npm run tauri -- android build --ci --apk --target aarch64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-apk
+          path: src-tauri/gen/android/app/build/outputs/apk/arm64/release/*.apk
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    needs: build
+    if: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ needs.build.outputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate required secrets before changing production
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: '-1004378561792'
+        run: |
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_CERT_SHA256 AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY TELEGRAM_BOT_TOKEN; do
+            if [ -z "${!name}" ]; then echo "Missing setting: $name"; exit 1; fi
+          done
+          node scripts/check-telegram.mjs
+          aws --endpoint-url=https://storage.yandexcloud.net --region=ru-central1 s3api head-bucket --bucket "$ORBITA_BUCKET"
+      - uses: actions/download-artifact@v4
+        with:
+          name: unsigned-apk
+          path: unsigned-apk
+      - uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: dist
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager "build-tools;37.0.0"
+      - name: Sign and verify APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: node scripts/ci-release.mjs sign
+      - name: Prepare draft release
+        run: |
+          if gh release view "$RELEASE_TAG" --json isDraft > release-state.json 2>/dev/null; then
+            echo "This version already has a release. Use a new version, or resolve the existing draft before retrying."
+            exit 1
+          fi
+          (cd dist && zip -qr "../release-output/orbita-web-${RELEASE_TAG}.zip" .)
+          gh release create "$RELEASE_TAG" --target "$GITHUB_SHA" --draft --title "Орбита $RELEASE_TAG" --notes "Android APK и веб-версия: $ORBITA_WEB_URL" release-output/*
+      - name: Deploy website, keeping old assets for existing sessions
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ru-central1
+        run: |
+          aws --endpoint-url=https://storage.yandexcloud.net s3 cp dist/ "s3://$ORBITA_BUCKET/" --recursive --exclude index.html --exclude sw.js --exclude release.json --cache-control "public,max-age=3600" --only-show-errors
+          for file in index.html sw.js release.json; do
+            aws --endpoint-url=https://storage.yandexcloud.net s3 cp "dist/$file" "s3://$ORBITA_BUCKET/$file" --cache-control "no-cache,no-store,must-revalidate" --only-show-errors
+          done
+          node scripts/ci-release.mjs verify-web
+      - name: Publish GitHub release
+        run: |
+          gh release edit "$RELEASE_TAG" --draft=false --latest
+          gh api "repos/$GH_REPO/releases/tags/$RELEASE_TAG" --jq '{release: .}' > telegram-event.json
+      - name: Publish APK and link to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: '-1004378561792'
+          TELEGRAM_BOT_USERNAME: davaivorbitu_ai
+        run: GITHUB_EVENT_PATH="$PWD/telegram-event.json" node scripts/publish-telegram.mjs
